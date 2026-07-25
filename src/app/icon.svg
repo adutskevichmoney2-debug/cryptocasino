@@ -1,0 +1,21 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ccg" x1="8" y1="6" x2="42" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2ADFA4"/>
+      <stop offset="0.55" stop-color="#17C588"/>
+      <stop offset="1" stop-color="#0E9C6B"/>
+    </linearGradient>
+  </defs>
+  <polygon points="24,3.5 41.7,13.75 41.7,34.25 24,44.5 6.3,34.25 6.3,13.75" fill="url(#ccg)" stroke="url(#ccg)" stroke-width="7" stroke-linejoin="round"/>
+  <polygon points="24,10.2 35.9,17.1 35.9,30.9 24,37.8 12.1,30.9 12.1,17.1" fill="#0B0E13" stroke="#0B0E13" stroke-width="4.5" stroke-linejoin="round"/>
+  <g stroke="#0B0E13" stroke-width="3.1" stroke-linecap="round">
+    <line x1="24" y1="1.6" x2="24" y2="7.6"/>
+    <line x1="24" y1="40.4" x2="24" y2="46.4"/>
+    <line x1="4.3" y1="12.6" x2="9.6" y2="15.6"/>
+    <line x1="38.4" y1="32.4" x2="43.7" y2="35.4"/>
+    <line x1="4.3" y1="35.4" x2="9.6" y2="32.4"/>
+    <line x1="38.4" y1="15.6" x2="43.7" y2="12.6"/>
+  </g>
+  <path d="M 30.4 29.9 A 8.6 8.6 0 1 1 30.4 18.1" stroke="#EDF2F7" stroke-width="5.4" stroke-linecap="round" fill="none"/>
+  <rect x="30.1" y="21.9" width="4.2" height="4.2" rx="1" transform="rotate(45 32.2 24)" fill="url(#ccg)"/>
+</svg>

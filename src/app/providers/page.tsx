@@ -19,7 +19,11 @@ export default function ProvidersPage() {
         {PROVIDERS.map((p) => {
           const count = GAMES.filter((g) => g.provider === p).length;
           return (
-            <Link key={p} href="/casino" className="surface lift group flex items-center gap-3.5 p-5">
+            <Link
+              key={p}
+              href={`/casino?provider=${encodeURIComponent(p)}`}
+              className="surface lift group flex items-center gap-3.5 p-5"
+            >
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-em/10 text-em transition-transform duration-300 group-hover:scale-110">
                 <Layers size={20} />
               </span>

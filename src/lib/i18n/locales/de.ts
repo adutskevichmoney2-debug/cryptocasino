@@ -41,7 +41,7 @@ export const de: Dict = {
     provider: "Anbieter",
     allProviders: "Alle Anbieter",
     category: "Kategorie",
-    results: "Ergebnisse",
+    results: "Gefunden",
     nothingFound: "Nichts gefunden",
     nothingFoundHint: "Versuchen Sie einen anderen Begriff oder setzen Sie die Filter zurück",
     online: "online",
@@ -136,6 +136,7 @@ export const de: Dict = {
     coin: "Coin",
     network: "Netzwerk",
     selectCoin: "Coin auswählen",
+    searchCoin: "Coin suchen",
     selectNetwork: "Netzwerk auswählen",
     depositAddress: "Einzahlungsadresse",
     addressPending: "Die Adresse wird angezeigt, sobald das Zahlungsmodul verbunden ist",
@@ -233,6 +234,11 @@ export const de: Dict = {
     activated: "Der Bonus ist nach Ihrer ersten Einzahlung verfügbar",
     wager: "Umsatzbedingung",
     minDep: "Mindesteinzahlung",
+    promoTitle: "Haben Sie einen Promo-Code?",
+    promoPlaceholder: "Promo-Code eingeben",
+    promoApply: "Einlösen",
+    promoInvalid: "Promo-Code nicht gefunden oder ungültig",
+    promoOk: "Code angenommen! Der Bonus wird nach Ihrer ersten Einzahlung aktiviert",
     cards: {
       welcome: {
         title: "Willkommenspaket",
@@ -328,6 +334,7 @@ export const de: Dict = {
     totalBets: "Wetten gesamt",
     totalWagered: "Gesamteinsatz",
     memberSince: "Mitglied seit",
+    playerId: "Spieler-ID",
     changeAvatar: "Foto ändern",
     uploadNew: "Foto hochladen",
     remove: "Entfernen",
@@ -379,6 +386,7 @@ export const de: Dict = {
     chatReply:
       "Vielen Dank für Ihre Nachricht! Ein Mitarbeiter tritt dem Chat bei, sobald der Support-Service integriert ist (Punkt SUPPORT_CHAT_EMBED im Code).",
     online247: "Online 24/7",
+    idHint: "Geben Sie diese ID in Ihrer Anfrage an, damit wir Ihr Konto schneller finden",
     cats: {
       account: "Konto",
       deposits: "Einzahlungen",

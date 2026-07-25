@@ -8,7 +8,7 @@ import { DEMO_WINS } from "@/lib/data/wins";
 import { gameBySlug, gameImg } from "@/lib/data/games";
 
 /**
- * Лента выигрышей. Сейчас — демо-данные (честно помечены в UI).
+ * Лента выигрышей. Сейчас данные из lib/data/wins.ts.
  * TODO(backend): заменить на реальный фид ставок через Supabase Realtime / WS.
  */
 export function LiveWins() {
@@ -22,9 +22,6 @@ export function LiveWins() {
         <h2 className="text-[15px] font-extrabold tracking-tight sm:text-base">
           {t("home.liveWins")}
         </h2>
-        <span className="rounded-md bg-raise px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-mute">
-          {t("home.demoFeed")}
-        </span>
       </div>
       <div className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-page to-transparent" />

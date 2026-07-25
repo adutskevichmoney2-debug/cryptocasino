@@ -46,6 +46,7 @@ export const COINS: Coin[] = [
       { id: "ton", name: "TON", standard: "Jetton", minDeposit: 1, minWithdraw: 5, fee: 0.3, confirmations: 1, addressRegex: TONRE.regex, addressHint: TONRE.hint },
       { id: "sol", name: "Solana", standard: "SPL", minDeposit: 1, minWithdraw: 5, fee: 0.5, confirmations: 1, addressRegex: SOLANA.regex, addressHint: SOLANA.hint },
       { id: "polygon", name: "Polygon", standard: "ERC-20", minDeposit: 1, minWithdraw: 10, fee: 0.3, confirmations: 30, addressRegex: EVM.regex, addressHint: EVM.hint },
+      { id: "arbitrum", name: "Arbitrum One", standard: "ERC-20", minDeposit: 1, minWithdraw: 10, fee: 0.3, confirmations: 1, addressRegex: EVM.regex, addressHint: EVM.hint },
     ],
   },
   {
@@ -84,6 +85,8 @@ export const COINS: Coin[] = [
       { id: "sol", name: "Solana", standard: "SPL", minDeposit: 1, minWithdraw: 5, fee: 0.5, confirmations: 1, addressRegex: SOLANA.regex, addressHint: SOLANA.hint },
       { id: "bep20", name: "BNB Smart Chain", standard: "BEP-20", minDeposit: 1, minWithdraw: 10, fee: 0.5, confirmations: 15, addressRegex: EVM.regex, addressHint: EVM.hint },
       { id: "polygon", name: "Polygon", standard: "ERC-20", minDeposit: 1, minWithdraw: 10, fee: 0.3, confirmations: 30, addressRegex: EVM.regex, addressHint: EVM.hint },
+      { id: "base", name: "Base", standard: "ERC-20", minDeposit: 1, minWithdraw: 10, fee: 0.2, confirmations: 1, addressRegex: EVM.regex, addressHint: EVM.hint },
+      { id: "arbitrum", name: "Arbitrum One", standard: "ERC-20", minDeposit: 1, minWithdraw: 10, fee: 0.3, confirmations: 1, addressRegex: EVM.regex, addressHint: EVM.hint },
     ],
   },
   {

@@ -83,10 +83,44 @@ function SidebarInner() {
       )}
       style={{ transitionTimingFunction: "cubic-bezier(0.22,1,0.36,1)" }}
     >
-      <div className={cn("flex h-16 shrink-0 items-center border-b border-line", sidebarCollapsed ? "justify-center" : "justify-end pr-3")}>
+      <div
+        className={cn(
+          "flex h-16 shrink-0 items-center gap-2 border-b border-line",
+          sidebarCollapsed ? "justify-center px-0" : "px-3",
+        )}
+      >
+        {/* быстрые вкладки, как у крупных проектов: Казино / Спорт */}
+        {!sidebarCollapsed && (
+          <>
+            <Link
+              href="/casino"
+              className={cn(
+                "flex h-10 flex-1 items-center justify-center gap-2 rounded-[10px] border text-[13px] font-extrabold transition-colors",
+                pathname.startsWith("/casino")
+                  ? "border-em/40 bg-em/10 text-em"
+                  : "border-line bg-card text-sub hover:border-line2 hover:text-ink",
+              )}
+            >
+              <Dices size={15} />
+              {t("nav.casino")}
+            </Link>
+            <Link
+              href="/sports"
+              className={cn(
+                "flex h-10 flex-1 items-center justify-center gap-2 rounded-[10px] border text-[13px] font-extrabold transition-colors",
+                pathname.startsWith("/sports")
+                  ? "border-em/40 bg-em/10 text-em"
+                  : "border-line bg-card text-sub hover:border-line2 hover:text-ink",
+              )}
+            >
+              <Trophy size={15} />
+              {t("nav.sports")}
+            </Link>
+          </>
+        )}
         <button
           onClick={toggleSidebar}
-          className="flex h-9 w-9 items-center justify-center rounded-[10px] text-mute transition-colors hover:bg-raise hover:text-ink"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] text-mute transition-colors hover:bg-raise hover:text-ink"
           aria-label="Toggle sidebar"
         >
           {sidebarCollapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}

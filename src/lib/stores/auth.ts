@@ -14,6 +14,8 @@ import { EMAIL_RE, USERNAME_RE, sha256, uid } from "@/lib/utils";
 
 export interface SessionUser {
   id: string;
+  /** Публичный числовой ID игрока (для поддержки). */
+  playerId: number;
   email: string;
   username: string;
   avatar: string | null;
@@ -45,6 +47,7 @@ export const useAuth = create<AuthState>()(
 
         const stored = {
           id: uid("u_"),
+          playerId: mockDb.nextPlayerId(),
           email,
           username,
           passHash: await sha256(password),
@@ -55,6 +58,7 @@ export const useAuth = create<AuthState>()(
         set({
           user: {
             id: stored.id,
+            playerId: stored.playerId,
             email: stored.email,
             username: stored.username,
             avatar: null,
@@ -73,6 +77,7 @@ export const useAuth = create<AuthState>()(
         set({
           user: {
             id: stored.id,
+            playerId: stored.playerId,
             email: stored.email,
             username: stored.username,
             avatar: stored.avatar,
@@ -107,6 +112,16 @@ export const useAuth = create<AuthState>()(
       name: "cc-session",
       storage: createJSONStorage(() => localStorage),
       partialize: (s) => ({ user: s.user }),
+      onRehydrateStorage: () => (state) => {
+        // миграция старых сессий без playerId
+        const u = state?.user;
+        if (u && !u.playerId) {
+          const stored = mockDb.findById(u.id);
+          if (stored) {
+            useAuth.setState({ user: { ...u, playerId: stored.playerId } });
+          }
+        }
+      },
     },
   ),
 );

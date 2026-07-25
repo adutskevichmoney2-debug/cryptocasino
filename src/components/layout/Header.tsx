@@ -37,12 +37,13 @@ function BalanceModule() {
   const balance = balances[activeCoin] ?? 0;
 
   return (
-    <div className="flex items-stretch overflow-hidden rounded-[10px] border border-line bg-field">
+    // ВАЖНО: без overflow-hidden — иначе выпадающий список балансов обрезается
+    <div className="flex items-stretch rounded-[10px] border border-line bg-field">
       <Dropdown
-        width="w-72"
+        width="w-72 max-w-[calc(100vw-24px)]"
         align="left"
         trigger={(open) => (
-          <button className="flex h-10 items-center gap-2 px-3 transition-colors hover:bg-raise">
+          <button className="flex h-10 items-center gap-2 rounded-l-[10px] px-3 transition-colors hover:bg-raise">
             <CoinIcon symbol={activeCoin} size={20} />
             <span className="tnum text-sm font-bold text-ink">
               {showFiat
@@ -123,7 +124,7 @@ function BalanceModule() {
       </Dropdown>
       <button
         onClick={() => openWallet("deposit")}
-        className="hidden h-10 items-center bg-em px-4 text-sm font-bold text-[#04281b] transition-colors hover:bg-em-bright sm:flex"
+        className="hidden h-10 items-center rounded-r-[9px] bg-em px-4 text-sm font-bold text-[#04281b] transition-colors hover:bg-em-bright sm:flex"
       >
         {t("common.deposit")}
       </button>
@@ -216,9 +217,14 @@ function ProfileMenu() {
         <div>
           <div className="flex items-center gap-3 border-b border-line px-4 py-3.5">
             <Avatar username={user.username} src={user.avatar} size={38} />
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-extrabold text-ink">{user.username}</p>
               <p className="truncate text-xs text-mute">{user.email}</p>
+              {user.playerId ? (
+                <p className="tnum mt-0.5 text-[11px] font-bold text-em">
+                  ID {user.playerId}
+                </p>
+              ) : null}
             </div>
           </div>
           <div className="p-1.5">

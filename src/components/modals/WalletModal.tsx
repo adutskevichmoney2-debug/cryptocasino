@@ -1,92 +1,199 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { ArrowDownToLine, ArrowUpFromLine, Clock3, QrCode, TriangleAlert } from "lucide-react";
+import {
+  ArrowDownToLine,
+  ArrowUpFromLine,
+  Check,
+  ChevronDown,
+  Clock3,
+  Copy,
+  QrCode,
+  Search,
+  ShieldCheck,
+  Timer,
+  TriangleAlert,
+} from "lucide-react";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Tabs } from "@/components/ui/Tabs";
 import { CoinIcon } from "@/components/ui/CoinIcon";
+import { Dropdown } from "@/components/ui/Dropdown";
 import { EmptyState } from "@/components/ui/misc";
 import { useI18n } from "@/lib/i18n/provider";
 import { useAuth } from "@/lib/stores/auth";
 import { useUi, type WalletTab } from "@/lib/stores/ui";
 import { useWallet } from "@/lib/stores/wallet";
-import { COINS, coinBySymbol } from "@/lib/data/coins";
+import { COINS, coinBySymbol, type Coin } from "@/lib/data/coins";
 import { cn, formatAmount, formatDate, formatFiat, shortAddress } from "@/lib/utils";
 
-function CoinPicker({
-  value,
-  onChange,
+/* ============ Селектор монеты (поиск + балансы) ============ */
+
+function CoinMenu({
+  onPick,
 }: {
-  value: string;
-  onChange: (s: string) => void;
+  onPick: (symbol: string) => void;
 }) {
   const { t } = useI18n();
   const balances = useWallet((s) => s.balances);
+  const [q, setQ] = useState("");
+
+  const list = useMemo(() => {
+    const query = q.trim().toLowerCase();
+    if (!query) return COINS;
+    return COINS.filter(
+      (c) => c.symbol.toLowerCase().includes(query) || c.name.toLowerCase().includes(query),
+    );
+  }, [q]);
+
   return (
     <div>
-      <p className="mb-1.5 text-[13px] font-semibold text-sub">{t("wallet.coin")}</p>
-      <div className="grid max-h-[168px] grid-cols-3 gap-1.5 overflow-y-auto pr-1 sm:grid-cols-4">
-        {COINS.map((c) => (
-          <button
-            key={c.symbol}
-            onClick={() => onChange(c.symbol)}
-            className={cn(
-              "flex items-center gap-2 rounded-[10px] border px-2.5 py-2 transition-colors",
-              value === c.symbol
-                ? "border-em/60 bg-em/10"
-                : "border-line bg-field hover:border-line2",
-            )}
-          >
-            <CoinIcon symbol={c.symbol} size={20} />
-            <span className="min-w-0 text-left">
-              <span className="block truncate text-[12.5px] font-bold leading-tight text-ink">
-                {c.symbol}
-              </span>
-              <span className="tnum block text-[10.5px] leading-tight text-mute">
-                {formatAmount(balances[c.symbol] ?? 0, 4)}
-              </span>
-            </span>
-          </button>
-        ))}
+      <div className="border-b border-line p-2">
+        <div className="relative">
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-mute" />
+          <input
+            autoFocus
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder={t("wallet.searchCoin")}
+            className="h-9 w-full rounded-lg border border-line bg-field pl-9 pr-3 text-[13px] text-ink outline-none placeholder:text-mute focus:border-em/60"
+          />
+        </div>
+      </div>
+      <div className="max-h-[264px] overflow-y-auto p-1.5">
+        {list.length === 0 ? (
+          <p className="px-3 py-6 text-center text-[12.5px] text-mute">{t("common.nothingFound")}</p>
+        ) : (
+          list.map((c) => {
+            const b = balances[c.symbol] ?? 0;
+            return (
+              <button
+                key={c.symbol}
+                onClick={() => onPick(c.symbol)}
+                className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 transition-colors hover:bg-hover"
+              >
+                <CoinIcon symbol={c.symbol} size={26} />
+                <span className="min-w-0 flex-1 text-left">
+                  <span className="block text-[13px] font-extrabold leading-tight text-ink">
+                    {c.symbol}
+                  </span>
+                  <span className="block truncate text-[11px] leading-tight text-mute">
+                    {c.name}
+                  </span>
+                </span>
+                <span className="text-right">
+                  <span className="tnum block text-[12.5px] font-bold leading-tight text-ink">
+                    {formatAmount(b, c.decimals)}
+                  </span>
+                  <span className="tnum block text-[10.5px] leading-tight text-mute">
+                    ${formatFiat(b * c.usdRate)}
+                  </span>
+                </span>
+              </button>
+            );
+          })
+        )}
       </div>
     </div>
   );
 }
+
+function CoinSelect({ value, onChange }: { value: string; onChange: (s: string) => void }) {
+  const { t } = useI18n();
+  const balances = useWallet((s) => s.balances);
+  const coin = coinBySymbol(value)!;
+  const balance = balances[value] ?? 0;
+
+  return (
+    <div>
+      <p className="mb-1.5 text-[13px] font-semibold text-sub">{t("wallet.coin")}</p>
+      <Dropdown
+        align="left"
+        width="w-full"
+        trigger={(open) => (
+          <button
+            className={cn(
+              "flex h-[54px] w-full items-center gap-3 rounded-xl border bg-field px-3.5 transition-colors",
+              open ? "border-em/60" : "border-line hover:border-line2",
+            )}
+          >
+            <CoinIcon symbol={value} size={28} />
+            <span className="min-w-0 flex-1 text-left">
+              <span className="block text-[14px] font-extrabold leading-tight text-ink">
+                {coin.symbol}
+              </span>
+              <span className="block truncate text-[11.5px] leading-tight text-mute">
+                {coin.name}
+              </span>
+            </span>
+            <span className="text-right">
+              <span className="tnum block text-[13px] font-bold leading-tight text-ink">
+                {formatAmount(balance, coin.decimals)}
+              </span>
+              <span className="tnum block text-[11px] leading-tight text-mute">
+                ${formatFiat(balance * coin.usdRate)}
+              </span>
+            </span>
+            <ChevronDown
+              size={16}
+              className={cn("shrink-0 text-mute transition-transform", open && "rotate-180")}
+            />
+          </button>
+        )}
+      >
+        {(close) => (
+          <CoinMenu
+            onPick={(s) => {
+              onChange(s);
+              close();
+            }}
+          />
+        )}
+      </Dropdown>
+    </div>
+  );
+}
+
+/* ============ Селектор сети ============ */
 
 function NetworkPicker({
   coin,
   value,
   onChange,
 }: {
-  coin: string;
+  coin: Coin;
   value: string;
   onChange: (id: string) => void;
 }) {
   const { t } = useI18n();
-  const meta = coinBySymbol(coin)!;
   return (
     <div>
       <p className="mb-1.5 text-[13px] font-semibold text-sub">{t("wallet.network")}</p>
-      <div className="flex flex-wrap gap-1.5">
-        {meta.networks.map((n) => (
-          <button
-            key={n.id}
-            onClick={() => onChange(n.id)}
-            className={cn(
-              "rounded-[10px] border px-3 py-2 text-left transition-colors",
-              value === n.id
-                ? "border-em/60 bg-em/10"
-                : "border-line bg-field hover:border-line2",
-            )}
-          >
-            <span className="block text-[12.5px] font-bold leading-tight text-ink">
-              {n.standard}
-            </span>
-            <span className="block text-[10.5px] leading-tight text-mute">{n.name}</span>
-          </button>
-        ))}
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        {coin.networks.map((n) => {
+          const active = value === n.id;
+          return (
+            <button
+              key={n.id}
+              onClick={() => onChange(n.id)}
+              className={cn(
+                "relative rounded-xl border px-3 py-2.5 text-left transition-all",
+                active
+                  ? "border-em/70 bg-em/10"
+                  : "border-line bg-field hover:border-line2",
+              )}
+            >
+              <span className={cn("block text-[13px] font-extrabold leading-tight", active ? "text-em" : "text-ink")}>
+                {n.standard}
+              </span>
+              <span className="mt-0.5 block truncate text-[11px] leading-tight text-mute">
+                {n.name}
+              </span>
+              {active && <Check size={13} className="absolute right-2 top-2 text-em" />}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
@@ -107,28 +214,36 @@ function DepositPane() {
 
   return (
     <div className="space-y-4">
-      <CoinPicker value={coin} onChange={setCoin} />
-      <NetworkPicker coin={coin} value={networkId} onChange={(id) => setNetSel({ coin, id })} />
+      <CoinSelect value={coin} onChange={setCoin} />
+      <NetworkPicker coin={meta} value={networkId} onChange={(id) => setNetSel({ coin, id })} />
 
       {/*
         ============================================================
         PAYMENT_GATEWAY_EMBED — точка интеграции платёжного модуля.
         TODO(backend): запросить у бэкенда депозитный адрес для
-        (userId, coin, network) и отрисовать реальный QR + адрес c
-        кнопкой копирования. Ничего, кроме этого блока, менять не нужно.
+        (userId, coin, network), отрисовать реальный QR и адрес,
+        включить кнопку копирования. Меняется только этот блок.
         ============================================================
       */}
-      <div className="rounded-xl border border-dashed border-line2 bg-field/50 p-4">
-        <p className="mb-3 text-[13px] font-semibold text-sub">{t("wallet.depositAddress")}</p>
+      <div className="rounded-xl border border-line bg-panel p-4">
         <div className="flex items-center gap-4">
-          <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-lg border border-line bg-card text-mute">
-            <QrCode size={34} strokeWidth={1.5} />
+          <div className="relative flex h-[104px] w-[104px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-line bg-field">
+            <QrCode size={40} strokeWidth={1.3} className="text-mute/70" />
+            <span className="absolute inset-x-0 bottom-0 bg-raise/90 py-0.5 text-center text-[9px] font-extrabold uppercase tracking-wider text-mute">
+              {t("common.comingSoon")}
+            </span>
           </div>
-          <div className="min-w-0">
-            <p className="text-[13.5px] font-bold leading-snug text-ink">
-              {t("wallet.addressPending")}
+          <div className="min-w-0 flex-1">
+            <p className="text-[12.5px] font-semibold text-sub">
+              {t("wallet.depositAddress")} · {network.standard}
             </p>
-            <p className="mt-1.5 text-[12px] leading-relaxed text-mute">
+            <div className="mt-2 flex h-11 items-center gap-2 rounded-[10px] border border-dashed border-line2 bg-field px-3.5">
+              <span className="min-w-0 flex-1 truncate text-[12.5px] text-mute">
+                {t("wallet.addressPending")}
+              </span>
+              <Copy size={14} className="shrink-0 text-mute/50" />
+            </div>
+            <p className="mt-2 text-[11px] leading-relaxed text-mute">
               {t("wallet.addressPendingHint")}
             </p>
           </div>
@@ -136,17 +251,27 @@ function DepositPane() {
       </div>
 
       <div className="grid grid-cols-2 gap-2.5">
-        <div className="rounded-[10px] bg-field px-3.5 py-2.5">
-          <p className="text-[11px] font-semibold text-mute">{t("wallet.minDeposit")}</p>
-          <p className="tnum mt-0.5 text-[13.5px] font-bold text-ink">
-            {formatAmount(network.minDeposit, meta.decimals)} {meta.symbol}
-          </p>
+        <div className="flex items-center gap-2.5 rounded-xl border border-line bg-field px-3.5 py-3">
+          <ArrowDownToLine size={16} className="shrink-0 text-em" />
+          <span>
+            <span className="block text-[10.5px] font-semibold uppercase tracking-wide text-mute">
+              {t("wallet.minDeposit")}
+            </span>
+            <span className="tnum block text-[13px] font-extrabold text-ink">
+              {formatAmount(network.minDeposit, meta.decimals)} {meta.symbol}
+            </span>
+          </span>
         </div>
-        <div className="rounded-[10px] bg-field px-3.5 py-2.5">
-          <p className="text-[11px] font-semibold text-mute">{t("common.status")}</p>
-          <p className="mt-0.5 text-[13.5px] font-bold text-ink">
-            {t("wallet.creditNote", { n: network.confirmations })}
-          </p>
+        <div className="flex items-center gap-2.5 rounded-xl border border-line bg-field px-3.5 py-3">
+          <Timer size={16} className="shrink-0 text-em" />
+          <span>
+            <span className="block text-[10.5px] font-semibold uppercase tracking-wide text-mute">
+              {t("common.status")}
+            </span>
+            <span className="block text-[12px] font-bold leading-tight text-ink">
+              {t("wallet.creditNote", { n: network.confirmations })}
+            </span>
+          </span>
         </div>
       </div>
     </div>
@@ -200,8 +325,8 @@ function WithdrawPane() {
 
   return (
     <div className="space-y-4">
-      <CoinPicker value={coin} onChange={setCoin} />
-      <NetworkPicker coin={coin} value={networkId} onChange={(id) => setNetSel({ coin, id })} />
+      <CoinSelect value={coin} onChange={setCoin} />
+      <NetworkPicker coin={meta} value={networkId} onChange={(id) => setNetSel({ coin, id })} />
 
       <Input
         label={`${t("wallet.address")} · ${network.name} (${network.standard})`}
@@ -220,41 +345,59 @@ function WithdrawPane() {
           <p className="text-[13px] font-semibold text-sub">{t("wallet.amount")}</p>
           <p className="tnum text-[12px] text-mute">
             {t("wallet.available")}:{" "}
-            <button
-              className="font-bold text-em hover:underline"
-              onClick={() => setAmount(String(balance))}
-            >
+            <b className="text-sub">
               {formatAmount(balance, meta.decimals)} {coin}
-            </button>
+            </b>
           </p>
         </div>
-        <Input
-          type="number"
-          inputMode="decimal"
-          placeholder={`${t("common.min")}: ${formatAmount(network.minWithdraw, meta.decimals)} ${coin}`}
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          error={fieldErr.amount}
-        />
+        <div className="relative">
+          <input
+            type="number"
+            inputMode="decimal"
+            placeholder={`${t("common.min")}: ${formatAmount(network.minWithdraw, meta.decimals)}`}
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            className={cn(
+              "tnum h-12 w-full rounded-xl border bg-field pl-3.5 pr-24 text-[14px] font-bold text-ink outline-none transition-colors placeholder:font-normal placeholder:text-mute",
+              fieldErr.amount ? "border-danger/70 focus:border-danger" : "border-line focus:border-em/70",
+            )}
+          />
+          <div className="absolute right-2.5 top-1/2 flex -translate-y-1/2 items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setAmount(String(balance))}
+              className="rounded-md bg-raise px-2 py-1 text-[11px] font-extrabold text-em transition-colors hover:bg-hover"
+            >
+              {t("common.max").toUpperCase()}
+            </button>
+            <span className="text-[12px] font-bold text-mute">{coin}</span>
+          </div>
+        </div>
+        {fieldErr.amount && (
+          <p className="mt-1.5 text-xs font-medium text-danger">{fieldErr.amount}</p>
+        )}
       </div>
 
-      <div className="space-y-1.5 rounded-[10px] bg-field px-3.5 py-3 text-[12.5px]">
-        <div className="flex justify-between">
+      <div className="divide-y divide-line rounded-xl border border-line bg-panel">
+        <div className="flex items-center justify-between px-4 py-2.5 text-[12.5px]">
           <span className="text-mute">{t("wallet.fee")}</span>
           <span className="tnum font-bold text-ink">
             {formatAmount(network.fee, meta.decimals)} {coin}
           </span>
         </div>
-        <div className="flex justify-between">
+        <div className="flex items-center justify-between px-4 py-2.5 text-[12.5px]">
           <span className="text-mute">{t("wallet.youReceive")}</span>
-          <span className="tnum font-bold text-em">
-            {formatAmount(receive, meta.decimals)} {coin} · ${formatFiat(receive * meta.usdRate)}
+          <span className="tnum font-extrabold text-em">
+            {formatAmount(receive, meta.decimals)} {coin}
+            <span className="ml-1.5 font-semibold text-mute">
+              ≈ ${formatFiat(receive * meta.usdRate)}
+            </span>
           </span>
         </div>
       </div>
 
       {balance === 0 && (
-        <p className="flex items-start gap-2 rounded-[10px] bg-warn/10 px-3.5 py-2.5 text-[12px] font-semibold leading-snug text-warn">
+        <p className="flex items-start gap-2.5 rounded-xl border border-warn/25 bg-warn/10 px-3.5 py-3 text-[12px] font-semibold leading-snug text-warn">
           <TriangleAlert size={15} className="mt-px shrink-0" />
           {t("wallet.insufficient")}
         </p>
@@ -262,6 +405,7 @@ function WithdrawPane() {
 
       {/* TODO(backend): POST /withdrawals + серверная валидация и очередь выплат */}
       <Button fullWidth size="lg" onClick={submit}>
+        <ShieldCheck size={16} />
         {t("wallet.requestWithdraw")}
       </Button>
     </div>
@@ -293,7 +437,7 @@ function HistoryPane() {
   return (
     <div className="space-y-1.5">
       {transactions.map((tx) => (
-        <div key={tx.id} className="flex items-center gap-3 rounded-[10px] bg-field px-3.5 py-3">
+        <div key={tx.id} className="flex items-center gap-3 rounded-xl border border-line bg-field px-3.5 py-3">
           <span
             className={cn(
               "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg",
@@ -343,7 +487,6 @@ export function WalletModal() {
   const open = modal === "wallet";
 
   // Кошелёк доступен только авторизованным: перенаправляем в окно входа.
-  // Вызовы zustand-экшенов — синхронизация с внешним стором, не setState React.
   useEffect(() => {
     if (open && !user) {
       closeModal();

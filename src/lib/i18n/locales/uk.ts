@@ -41,7 +41,7 @@ export const uk: Dict = {
     provider: "Провайдер",
     allProviders: "Усі провайдери",
     category: "Категорія",
-    results: "результатів",
+    results: "Знайдено",
     nothingFound: "Нічого не знайдено",
     nothingFoundHint: "Спробуйте змінити запит або скинути фільтри",
     online: "онлайн",
@@ -136,6 +136,7 @@ export const uk: Dict = {
     coin: "Монета",
     network: "Мережа",
     selectCoin: "Оберіть монету",
+    searchCoin: "Пошук монети",
     selectNetwork: "Оберіть мережу",
     depositAddress: "Адреса для поповнення",
     addressPending: "Адреса з'явиться після підключення платіжного модуля",
@@ -233,6 +234,11 @@ export const uk: Dict = {
     activated: "Бонус буде доступний після першого поповнення",
     wager: "Вейджер",
     minDep: "Мін. депозит",
+    promoTitle: "Є промокод?",
+    promoPlaceholder: "Введіть промокод",
+    promoApply: "Активувати",
+    promoInvalid: "Промокод не знайдено або він недійсний",
+    promoOk: "Промокод прийнято! Бонус активується після першого поповнення",
     cards: {
       welcome: {
         title: "Вітальний пакет",
@@ -328,6 +334,7 @@ export const uk: Dict = {
     totalBets: "Всього ставок",
     totalWagered: "Оборот",
     memberSince: "З нами з",
+    playerId: "ID гравця",
     changeAvatar: "Змінити фото",
     uploadNew: "Завантажити фото",
     remove: "Видалити",
@@ -379,6 +386,7 @@ export const uk: Dict = {
     chatReply:
       "Дякуємо за повідомлення! Оператор підключиться до діалогу після інтеграції сервісу підтримки (точка SUPPORT_CHAT_EMBED у коді).",
     online247: "Онлайн 24/7",
+    idHint: "Вкажіть цей ID у зверненні — так ми швидше знайдемо ваш акаунт",
     cats: {
       account: "Акаунт",
       deposits: "Поповнення",

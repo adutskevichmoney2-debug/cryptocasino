@@ -41,7 +41,7 @@ export const zh: Dict = {
     provider: "供应商",
     allProviders: "全部供应商",
     category: "分类",
-    results: "条结果",
+    results: "找到",
     nothingFound: "未找到结果",
     nothingFoundHint: "请尝试修改搜索词或重置筛选条件",
     online: "在线",
@@ -136,6 +136,7 @@ export const zh: Dict = {
     coin: "币种",
     network: "网络",
     selectCoin: "选择币种",
+    searchCoin: "搜索币种",
     selectNetwork: "选择网络",
     depositAddress: "存款地址",
     addressPending: "支付模块接入后将显示地址",
@@ -233,6 +234,11 @@ export const zh: Dict = {
     activated: "首次存款后奖金即可使用",
     wager: "流水要求",
     minDep: "最低存款",
+    promoTitle: "有优惠码？",
+    promoPlaceholder: "输入优惠码",
+    promoApply: "兑换",
+    promoInvalid: "优惠码不存在或已失效",
+    promoOk: "兑换成功！首次存款后奖金即会激活",
     cards: {
       welcome: {
         title: "欢迎礼包",
@@ -328,6 +334,7 @@ export const zh: Dict = {
     totalBets: "总投注次数",
     totalWagered: "累计投注额",
     memberSince: "注册时间",
+    playerId: "玩家ID",
     changeAvatar: "更换头像",
     uploadNew: "上传照片",
     remove: "删除",
@@ -379,6 +386,7 @@ export const zh: Dict = {
     chatReply:
       "感谢您的留言！客服支持服务集成后，客服人员将加入对话（代码中集成点为 SUPPORT_CHAT_EMBED）。",
     online247: "全天候在线",
+    idHint: "请在请求中注明此ID，以便我们更快找到您的账户",
     cats: {
       account: "账户",
       deposits: "存款",

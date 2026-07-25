@@ -41,7 +41,7 @@ export const hi: Dict = {
     provider: "प्रोवाइडर",
     allProviders: "सभी प्रोवाइडर",
     category: "श्रेणी",
-    results: "परिणाम",
+    results: "मिले",
     nothingFound: "कुछ नहीं मिला",
     nothingFoundHint: "कोई दूसरा शब्द आज़माएं या फ़िल्टर हटाएं",
     online: "ऑनलाइन",
@@ -136,6 +136,7 @@ export const hi: Dict = {
     coin: "कॉइन",
     network: "नेटवर्क",
     selectCoin: "कॉइन चुनें",
+    searchCoin: "कॉइन खोजें",
     selectNetwork: "नेटवर्क चुनें",
     depositAddress: "जमा पता",
     addressPending: "पेमेंट मॉड्यूल कनेक्ट होने के बाद पता दिखेगा",
@@ -233,6 +234,11 @@ export const hi: Dict = {
     activated: "पहली जमा के बाद बोनस उपलब्ध होगा",
     wager: "वेजर",
     minDep: "न्यूनतम जमा",
+    promoTitle: "प्रोमो कोड है?",
+    promoPlaceholder: "प्रोमो कोड दर्ज करें",
+    promoApply: "रिडीम करें",
+    promoInvalid: "प्रोमो कोड नहीं मिला या अमान्य है",
+    promoOk: "कोड स्वीकार! पहली जमा के बाद बोनस सक्रिय होगा",
     cards: {
       welcome: {
         title: "वेलकम पैक",
@@ -328,6 +334,7 @@ export const hi: Dict = {
     totalBets: "कुल बेट",
     totalWagered: "कुल बेट राशि",
     memberSince: "सदस्य बने",
+    playerId: "प्लेयर ID",
     changeAvatar: "फ़ोटो बदलें",
     uploadNew: "फ़ोटो अपलोड करें",
     remove: "हटाएं",
@@ -379,6 +386,7 @@ export const hi: Dict = {
     chatReply:
       "आपके संदेश के लिए धन्यवाद! सपोर्ट सेवा इंटीग्रेट होने के बाद एजेंट जुड़ेगा (कोड में SUPPORT_CHAT_EMBED पॉइंट)।",
     online247: "24/7 ऑनलाइन",
+    idHint: "अपने अनुरोध में यह ID बताएं ताकि हम आपका खाता जल्दी ढूंढ सकें",
     cats: {
       account: "अकाउंट",
       deposits: "जमा",

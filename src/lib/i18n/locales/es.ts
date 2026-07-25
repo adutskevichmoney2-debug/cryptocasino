@@ -41,7 +41,7 @@ export const es: Dict = {
     provider: "Proveedor",
     allProviders: "Todos los proveedores",
     category: "Categoría",
-    results: "resultados",
+    results: "Encontrados",
     nothingFound: "Sin resultados",
     nothingFoundHint: "Prueba otro término o restablece los filtros",
     online: "en línea",
@@ -136,6 +136,7 @@ export const es: Dict = {
     coin: "Moneda",
     network: "Red",
     selectCoin: "Selecciona una moneda",
+    searchCoin: "Buscar moneda",
     selectNetwork: "Selecciona una red",
     depositAddress: "Dirección de depósito",
     addressPending: "La dirección aparecerá cuando el módulo de pago esté conectado",
@@ -233,6 +234,11 @@ export const es: Dict = {
     activated: "El bono estará disponible tras tu primer depósito",
     wager: "Requisito de apuesta",
     minDep: "Depósito mín.",
+    promoTitle: "¿Tienes un código promocional?",
+    promoPlaceholder: "Introduce el código",
+    promoApply: "Canjear",
+    promoInvalid: "Código no encontrado o no válido",
+    promoOk: "¡Código aceptado! El bono se activa tras tu primer depósito",
     cards: {
       welcome: {
         title: "Paquete de bienvenida",
@@ -328,6 +334,7 @@ export const es: Dict = {
     totalBets: "Total de apuestas",
     totalWagered: "Total apostado",
     memberSince: "Miembro desde",
+    playerId: "ID de jugador",
     changeAvatar: "Cambiar foto",
     uploadNew: "Subir foto",
     remove: "Eliminar",
@@ -379,6 +386,7 @@ export const es: Dict = {
     chatReply:
       "¡Gracias por tu mensaje! Un agente en vivo se unirá una vez que el servicio de soporte esté integrado (punto SUPPORT_CHAT_EMBED en el código).",
     online247: "En línea 24/7",
+    idHint: "Incluye este ID en tu solicitud para que encontremos tu cuenta más rápido",
     cats: {
       account: "Cuenta",
       deposits: "Depósitos",

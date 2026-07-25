@@ -19,3 +19,10 @@ export const PROMOS: Promo[] = [
   { id: "rakeback", badge: "10%", wager: "—", minDep: "—", img: "/images/bonus-rakeback.webp", accent: "#B183F0" },
   { id: "reload", badge: "+50%", wager: "x30", minDep: "10 USDT", img: "/images/bonus-reload.webp", accent: "#F0A322" },
 ];
+
+/**
+ * Действующие промокоды (мок).
+ * TODO(backend): валидация промокодов должна выполняться на сервере
+ * (таблица promo_codes: код, тип бонуса, лимиты, срок действия).
+ */
+export const VALID_PROMO_CODES = ["WELCOME200", "CRYPTO50"];

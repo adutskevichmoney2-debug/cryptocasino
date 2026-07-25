@@ -41,7 +41,7 @@ export const en: Dict = {
     provider: "Provider",
     allProviders: "All providers",
     category: "Category",
-    results: "results",
+    results: "Found",
     nothingFound: "Nothing found",
     nothingFoundHint: "Try a different query or reset the filters",
     online: "online",
@@ -136,6 +136,7 @@ export const en: Dict = {
     coin: "Coin",
     network: "Network",
     selectCoin: "Select coin",
+    searchCoin: "Search coin",
     selectNetwork: "Select network",
     depositAddress: "Deposit address",
     addressPending: "Address will appear once the payment module is connected",
@@ -229,6 +230,11 @@ export const en: Dict = {
     activated: "The bonus will be available after your first deposit",
     wager: "Wager",
     minDep: "Min. deposit",
+    promoTitle: "Have a promo code?",
+    promoPlaceholder: "Enter promo code",
+    promoApply: "Redeem",
+    promoInvalid: "Promo code not found or invalid",
+    promoOk: "Code accepted! The bonus activates after your first deposit",
     cards: {
       welcome: {
         title: "Welcome Pack",
@@ -324,6 +330,7 @@ export const en: Dict = {
     totalBets: "Total bets",
     totalWagered: "Wagered",
     memberSince: "Member since",
+    playerId: "Player ID",
     changeAvatar: "Change photo",
     uploadNew: "Upload photo",
     remove: "Remove",
@@ -375,6 +382,7 @@ export const en: Dict = {
     chatReply:
       "Thanks for your message! A live agent will join once the support service is integrated (SUPPORT_CHAT_EMBED point in the code).",
     online247: "Online 24/7",
+    idHint: "Include this ID in your request so we can find your account faster",
     cats: {
       account: "Account",
       deposits: "Deposits",

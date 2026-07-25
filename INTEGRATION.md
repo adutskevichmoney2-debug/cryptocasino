@@ -19,6 +19,8 @@
 
 Коды ошибок в сторе совпадают с ключами i18n (`auth.err.*`) — UI менять не нужно, только маппинг ошибок Supabase → эти коды.
 
+**ID игрока:** у каждого пользователя есть публичный числовой `playerId` (8 цифр, генерируется при регистрации). На бэкенде — колонка `profiles.player_id` (unique); админ может менять ID игрока (например, выдать 77777777) — уникальность гарантирует constraint БД. Показывается в профиле, меню шапки, чате поддержки и на странице поддержки.
+
 **2FA:** `profile/settings` → блок `TWO_FA_PLACEHOLDER` → Supabase Auth MFA (TOTP).
 
 ## 2. Профиль и аватар → Supabase Storage
@@ -66,6 +68,7 @@
 ## 8. Бонусы / VIP / Турниры / Рефералка
 
 - Активация бонуса: `src/app/bonuses/page.tsx` (`claim()`) → API со статусами и вейджером.
+- Промокоды: `PromoRedeem` в `src/app/bonuses/page.tsx`; сейчас валидация по мок-списку `VALID_PROMO_CODES` (`lib/data/promos.ts`) → заменить на `POST /promo/redeem` (таблица promo_codes: код, тип бонуса, лимит активаций, срок).
 - VIP-прогресс: `src/app/vip/page.tsx` — `wagered` приходит из API (сейчас честный 0).
 - Турниры: `src/lib/data/tournaments.ts` → API + Realtime лидерборды.
 - Рефералка: `src/app/referral/page.tsx` — код/статистика из API (генерация ссылки уже на месте).

@@ -10,6 +10,7 @@ import { SearchModal } from "@/components/modals/SearchModal";
 import { Toaster } from "@/components/ui/Toaster";
 import { CookieBanner } from "@/components/misc/CookieBanner";
 import { AgeGate } from "@/components/misc/AgeGate";
+import { SplashScreen } from "@/components/misc/SplashScreen";
 import { ChatWidget } from "@/components/support/ChatWidget";
 import { useUi } from "@/lib/stores/ui";
 import { useHasMounted } from "@/lib/hooks";
@@ -42,6 +43,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <Toaster />
       <CookieBanner />
       <AgeGate />
+      <SplashScreen />
     </div>
   );
 }

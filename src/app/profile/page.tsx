@@ -2,6 +2,7 @@
 
 import { BadgeCheck, Gem, Receipt, TrendingUp } from "lucide-react";
 import { AvatarUpload } from "@/components/profile/AvatarUpload";
+import { CopyButton } from "@/components/ui/misc";
 import { useI18n } from "@/lib/i18n/provider";
 import { useAuth } from "@/lib/stores/auth";
 import { useWallet } from "@/lib/stores/wallet";
@@ -24,7 +25,16 @@ export default function ProfileOverview() {
       {/* identity */}
       <div className="surface p-5 sm:p-6">
         <AvatarUpload />
-        <div className="mt-5 grid gap-3 border-t border-line pt-5 sm:grid-cols-3">
+        <div className="mt-5 grid gap-3 border-t border-line pt-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-mute">
+              {t("profile.playerId")}
+            </p>
+            <p className="mt-0.5 flex items-center gap-0.5 text-[15px] font-extrabold">
+              <span className="tnum text-em">{user.playerId}</span>
+              <CopyButton value={String(user.playerId)} className="!p-1.5" />
+            </p>
+          </div>
           <div>
             <p className="text-[11px] font-bold uppercase tracking-wider text-mute">
               {t("auth.username")}

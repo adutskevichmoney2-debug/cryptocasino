@@ -156,7 +156,7 @@ export function MobileNav() {
               </div>
 
               <div className="flex items-center justify-between border-t border-line px-4 py-3">
-                <LanguageSwitcher />
+                <LanguageSwitcher up />
                 <span className="flex h-7 w-9 items-center justify-center rounded-md border border-line2 text-[11px] font-extrabold text-sub">
                   18+
                 </span>

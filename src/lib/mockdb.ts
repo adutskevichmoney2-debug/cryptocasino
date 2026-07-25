@@ -11,6 +11,10 @@
 
 export interface StoredUser {
   id: string;
+  /** Числовой публичный ID игрока (8 цифр) — для поддержки и профиля.
+   *  TODO(backend): хранится в profiles.player_id; админ может менять
+   *  (например, выдать красивый ID 77777777) — уникальность проверяет БД. */
+  playerId: number;
   email: string;
   username: string;
   passHash: string;
@@ -20,11 +24,30 @@ export interface StoredUser {
 
 const USERS_KEY = "cc_users_v1";
 
+export function generatePlayerId(existing: StoredUser[]): number {
+  // 8 цифр, без ведущего нуля
+  for (let i = 0; i < 50; i++) {
+    const id = Math.floor(10_000_000 + Math.random() * 90_000_000);
+    if (!existing.some((u) => u.playerId === id)) return id;
+  }
+  return Date.now() % 100_000_000;
+}
+
 function readUsers(): StoredUser[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(USERS_KEY);
-    return raw ? (JSON.parse(raw) as StoredUser[]) : [];
+    const users = raw ? (JSON.parse(raw) as StoredUser[]) : [];
+    // миграция: аккаунтам, созданным до появления playerId, выдаём ID
+    let migrated = false;
+    for (const u of users) {
+      if (!u.playerId) {
+        u.playerId = generatePlayerId(users);
+        migrated = true;
+      }
+    }
+    if (migrated) localStorage.setItem(USERS_KEY, JSON.stringify(users));
+    return users;
   } catch {
     return [];
   }
@@ -35,6 +58,10 @@ function writeUsers(users: StoredUser[]) {
 }
 
 export const mockDb = {
+  /** Уникальный числовой ID для нового игрока */
+  nextPlayerId(): number {
+    return generatePlayerId(readUsers());
+  },
   findByEmail(email: string): StoredUser | undefined {
     return readUsers().find((u) => u.email.toLowerCase() === email.toLowerCase());
   },

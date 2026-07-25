@@ -28,7 +28,11 @@ function CasinoContent() {
   // из сайдбара, футера и при прямом переходе по ссылке.
   const cat = (searchParams.get("cat") as Cat | null) ?? "all";
   const [q, setQ] = useState("");
-  const [provider, setProvider] = useState<string>("all");
+  // провайдер инициализируется из URL (?provider=…) — так работают ссылки
+  // со страницы «Провайдеры»; дальше управляется дропдауном
+  const [provider, setProvider] = useState<string>(
+    () => searchParams.get("provider") ?? "all",
+  );
   const [sort, setSort] = useState<Sort>("popular");
 
   // "Показать ещё" сбрасывается при смене фильтров без эффектов:
@@ -182,8 +186,14 @@ function CasinoContent() {
         ))}
       </div>
 
-      {/* grid */}
-      {list.length === 0 ? (
+      {/* grid; избранное зависит от localStorage → рендерим после монтирования */}
+      {cat === "favorites" && !mounted ? (
+        <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="skeleton aspect-[3/4]" />
+          ))}
+        </div>
+      ) : list.length === 0 ? (
         <EmptyState
           icon={cat === "favorites" ? <Heart size={26} /> : undefined}
           title={t("common.nothingFound")}
@@ -192,7 +202,7 @@ function CasinoContent() {
       ) : (
         <>
           <p className="mb-3 text-[12.5px] font-semibold text-mute">
-            {list.length} {t("common.results")}
+            {t("common.results")}: <span className="tnum font-bold text-sub">{list.length}</span>
           </p>
           <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
             {(mounted ? list : list.slice(0, PAGE)).slice(0, visible).map((g) => (

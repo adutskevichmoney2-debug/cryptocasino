@@ -10,12 +10,15 @@ export function Dropdown({
   children,
   align = "right",
   width = "w-64",
+  up = false,
   contentClassName,
 }: {
   trigger: (open: boolean) => React.ReactNode;
   children: (close: () => void) => React.ReactNode;
   align?: "left" | "right";
   width?: string;
+  /** раскрывать меню вверх (для элементов у нижнего края экрана) */
+  up?: boolean;
   contentClassName?: string;
 }) {
   const [open, setOpen] = useState(false);
@@ -28,12 +31,13 @@ export function Dropdown({
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: 6, scale: 0.98 }}
+            initial={{ opacity: 0, y: up ? -6 : 6, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 4, scale: 0.98 }}
+            exit={{ opacity: 0, y: up ? -4 : 4, scale: 0.98 }}
             transition={{ duration: 0.16, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
-              "absolute z-50 mt-2 overflow-hidden rounded-xl border border-line bg-raise shadow-pop",
+              "absolute z-50 overflow-hidden rounded-xl border border-line bg-raise shadow-pop",
+              up ? "bottom-full mb-2" : "mt-2",
               align === "right" ? "right-0" : "left-0",
               width,
               contentClassName,

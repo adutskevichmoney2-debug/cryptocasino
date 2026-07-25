@@ -6,13 +6,20 @@ import { useI18n } from "@/lib/i18n/provider";
 import { Dropdown } from "@/components/ui/Dropdown";
 import { cn } from "@/lib/utils";
 
-export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
+export function LanguageSwitcher({
+  compact = false,
+  up = false,
+}: {
+  compact?: boolean;
+  up?: boolean;
+}) {
   const { locale, setLocale, t } = useI18n();
   const current = LOCALES.find((l) => l.code === locale)!;
 
   return (
     <Dropdown
       width="w-56"
+      up={up}
       trigger={(open) => (
         <button
           className={cn(

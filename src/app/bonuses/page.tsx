@@ -1,12 +1,67 @@
 "use client";
 
 import Image from "next/image";
-import { BadgePercent, Gift, ShieldQuestion } from "lucide-react";
+import { useState } from "react";
+import { BadgePercent, Gift, ShieldQuestion, TicketPercent } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useI18n } from "@/lib/i18n/provider";
 import { useAuth } from "@/lib/stores/auth";
 import { useUi } from "@/lib/stores/ui";
-import { PROMOS } from "@/lib/data/promos";
+import { PROMOS, VALID_PROMO_CODES } from "@/lib/data/promos";
+
+function PromoRedeem() {
+  const { t } = useI18n();
+  const user = useAuth((s) => s.user);
+  const { openAuth, toast } = useUi();
+  const [code, setCode] = useState("");
+  const [err, setErr] = useState(false);
+
+  const redeem = () => {
+    // TODO(backend): POST /promo/redeem — валидация кода на сервере
+    if (!user) {
+      toast("info", t("bonuses.loginToClaim"));
+      openAuth("register");
+      return;
+    }
+    const value = code.trim().toUpperCase();
+    if (!value) return;
+    if (VALID_PROMO_CODES.includes(value)) {
+      setErr(false);
+      setCode("");
+      toast("success", t("common.success"), t("bonuses.promoOk"));
+    } else {
+      setErr(true);
+      toast("error", t("common.error"), t("bonuses.promoInvalid"));
+    }
+  };
+
+  return (
+    <div className="surface mx-auto mt-10 flex max-w-[560px] flex-col items-center gap-3 p-6 text-center sm:p-7">
+      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-em/10 text-em">
+        <TicketPercent size={21} />
+      </span>
+      <h2 className="text-[17px] font-extrabold tracking-tight">{t("bonuses.promoTitle")}</h2>
+      <div className="flex w-full max-w-[400px] gap-2">
+        <input
+          value={code}
+          onChange={(e) => {
+            setCode(e.target.value);
+            setErr(false);
+          }}
+          onKeyDown={(e) => e.key === "Enter" && redeem()}
+          placeholder={t("bonuses.promoPlaceholder")}
+          className={`h-11 min-w-0 flex-1 rounded-[10px] border bg-field px-3.5 text-sm font-bold uppercase tracking-wide text-ink outline-none transition-colors placeholder:font-normal placeholder:normal-case placeholder:tracking-normal placeholder:text-mute ${
+            err ? "border-danger/70" : "border-line focus:border-em/70"
+          }`}
+        />
+        <Button onClick={redeem} className="h-11 shrink-0">
+          {t("bonuses.promoApply")}
+        </Button>
+      </div>
+      {err && <p className="text-xs font-medium text-danger">{t("bonuses.promoInvalid")}</p>}
+    </div>
+  );
+}
 
 export default function BonusesPage() {
   const { t, dict } = useI18n();
@@ -77,6 +132,8 @@ export default function BonusesPage() {
           </div>
         ))}
       </div>
+
+      <PromoRedeem />
 
       {/* how it works */}
       <div className="mt-12">

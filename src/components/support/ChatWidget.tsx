@@ -5,7 +5,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, SendHorizontal, X } from "lucide-react";
 import { LogoMark } from "@/components/brand/Logo";
 import { useI18n } from "@/lib/i18n/provider";
+import { useAuth } from "@/lib/stores/auth";
 import { useUi } from "@/lib/stores/ui";
+import { useHasMounted } from "@/lib/hooks";
 import { cn, uid } from "@/lib/utils";
 
 interface ChatMsg {
@@ -25,6 +27,8 @@ interface ChatMsg {
 export function ChatWidget() {
   const { t } = useI18n();
   const { chatOpen, setChat } = useUi();
+  const mounted = useHasMounted();
+  const user = useAuth((s) => s.user);
   // Приветствие рендерится как первый пузырь (не хранится в состоянии),
   // поэтому оно всегда на актуальном языке и не требует эффектов.
   const [messages, setMessages] = useState<ChatMsg[]>([]);
@@ -83,6 +87,11 @@ export function ChatWidget() {
                 <p className="text-[13.5px] font-extrabold leading-tight">{t("supportPage.chat")}</p>
                 <p className="text-[11px] font-semibold text-em">{t("supportPage.online247")}</p>
               </div>
+              {mounted && user?.playerId ? (
+                <span className="tnum mr-1 rounded-md bg-field px-2 py-1 text-[10.5px] font-extrabold text-sub">
+                  ID {user.playerId}
+                </span>
+              ) : null}
               <button
                 onClick={() => setChat(false)}
                 className="rounded-lg p-1.5 text-mute transition-colors hover:bg-raise hover:text-ink"

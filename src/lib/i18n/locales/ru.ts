@@ -43,7 +43,7 @@ export const ru = {
     provider: "Провайдер",
     allProviders: "Все провайдеры",
     category: "Категория",
-    results: "результатов",
+    results: "Найдено",
     nothingFound: "Ничего не найдено",
     nothingFoundHint: "Попробуйте изменить запрос или сбросить фильтры",
     online: "онлайн",
@@ -138,6 +138,7 @@ export const ru = {
     coin: "Монета",
     network: "Сеть",
     selectCoin: "Выберите монету",
+    searchCoin: "Поиск монеты",
     selectNetwork: "Выберите сеть",
     depositAddress: "Адрес для пополнения",
     addressPending: "Адрес появится после подключения платёжного модуля",
@@ -235,6 +236,11 @@ export const ru = {
     activated: "Бонус будет доступен после первого пополнения",
     wager: "Вейджер",
     minDep: "Мин. депозит",
+    promoTitle: "Есть промокод?",
+    promoPlaceholder: "Введите промокод",
+    promoApply: "Активировать",
+    promoInvalid: "Промокод не найден или недействителен",
+    promoOk: "Промокод принят! Бонус активируется после первого пополнения",
     cards: {
       welcome: {
         title: "Приветственный пакет",
@@ -330,6 +336,7 @@ export const ru = {
     totalBets: "Всего ставок",
     totalWagered: "Оборот",
     memberSince: "С нами с",
+    playerId: "ID игрока",
     changeAvatar: "Сменить фото",
     uploadNew: "Загрузить фото",
     remove: "Удалить",
@@ -381,6 +388,7 @@ export const ru = {
     chatReply:
       "Спасибо за сообщение! Оператор подключится к диалогу после интеграции сервиса поддержки (точка SUPPORT_CHAT_EMBED в коде).",
     online247: "Онлайн 24/7",
+    idHint: "Укажите этот ID в обращении — так мы найдём ваш аккаунт быстрее",
     cats: {
       account: "Аккаунт",
       deposits: "Пополнение",

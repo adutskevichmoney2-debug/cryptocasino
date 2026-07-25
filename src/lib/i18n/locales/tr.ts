@@ -41,7 +41,7 @@ export const tr: Dict = {
     provider: "Sağlayıcı",
     allProviders: "Tüm Sağlayıcılar",
     category: "Kategori",
-    results: "sonuç",
+    results: "Bulunan",
     nothingFound: "Sonuç bulunamadı",
     nothingFoundHint: "Farklı bir arama deneyin veya filtreleri sıfırlayın",
     online: "çevrimiçi",
@@ -136,6 +136,7 @@ export const tr: Dict = {
     coin: "Kripto Para",
     network: "Ağ",
     selectCoin: "Kripto para seçin",
+    searchCoin: "Coin ara",
     selectNetwork: "Ağ seçin",
     depositAddress: "Yatırma Adresi",
     addressPending: "Adres, ödeme modülü bağlandıktan sonra görünecek",
@@ -233,6 +234,11 @@ export const tr: Dict = {
     activated: "Bonus, ilk para yatırmanızdan sonra kullanılabilir olacak",
     wager: "Çevrim",
     minDep: "Min. yatırım",
+    promoTitle: "Promosyon kodunuz var mı?",
+    promoPlaceholder: "Promosyon kodunu girin",
+    promoApply: "Kullan",
+    promoInvalid: "Promosyon kodu bulunamadı veya geçersiz",
+    promoOk: "Kod kabul edildi! Bonus ilk para yatırma işleminizden sonra etkinleşir",
     cards: {
       welcome: {
         title: "Hoş Geldin Paketi",
@@ -328,6 +334,7 @@ export const tr: Dict = {
     totalBets: "Toplam Bahis",
     totalWagered: "Toplam Ciro",
     memberSince: "Üye Olma Tarihi",
+    playerId: "Oyuncu ID",
     changeAvatar: "Fotoğrafı Değiştir",
     uploadNew: "Fotoğraf Yükle",
     remove: "Kaldır",
@@ -379,6 +386,7 @@ export const tr: Dict = {
     chatReply:
       "Mesajınız için teşekkürler! Destek hizmeti entegre edildiğinde bir operatör bağlanacaktır (kodda SUPPORT_CHAT_EMBED noktası).",
     online247: "7/24 Çevrimiçi",
+    idHint: "Hesabınızı daha hızlı bulabilmemiz için talebinizde bu ID'yi belirtin",
     cats: {
       account: "Hesap",
       deposits: "Para Yatırma",

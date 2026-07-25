@@ -7,7 +7,9 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { AccordionItem } from "@/components/ui/misc";
 import { useI18n } from "@/lib/i18n/provider";
+import { useAuth } from "@/lib/stores/auth";
 import { useUi } from "@/lib/stores/ui";
+import { useHasMounted } from "@/lib/hooks";
 import { FAQ } from "@/lib/data/faq";
 import { EMAIL_RE, cn } from "@/lib/utils";
 
@@ -21,6 +23,8 @@ interface ContactForm {
 export default function SupportPage() {
   const { t, locale } = useI18n();
   const { setChat, toast } = useUi();
+  const mounted = useHasMounted();
+  const user = useAuth((s) => s.user);
   const [cat, setCat] = useState(FAQ[0].id);
   const lang: "ru" | "en" = locale === "ru" ? "ru" : "en";
 
@@ -95,6 +99,12 @@ export default function SupportPage() {
           <h2 className="mb-4 text-lg font-extrabold tracking-tight">
             {t("supportPage.contact")}
           </h2>
+          {mounted && user?.playerId ? (
+            <div className="mb-3 flex items-center gap-2.5 rounded-xl border border-em/25 bg-em/10 px-4 py-3">
+              <span className="tnum text-[15px] font-extrabold text-em">ID {user.playerId}</span>
+              <span className="text-[12px] leading-snug text-sub">{t("supportPage.idHint")}</span>
+            </div>
+          ) : null}
           <form onSubmit={onSubmit} className="surface space-y-3.5 p-5" noValidate>
             <Input
               label={t("supportPage.name")}
